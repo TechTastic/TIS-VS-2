@@ -1,11 +1,12 @@
-**So, you want to create a VS2 addon?**
+**To Do**
+- [X] Altitude Module (Y detection)
+- [ ] Gyroscopic Module (Quaternion detection)
+- [ ] Distance Module (distance raycast)
+- [ ] Cartographic Module (x and z detection based on map provided)
+- [ ] Velocity Module (velocity, sculk-like?)
+- [ ] Rotational Speed Module (omega)
+- [ ] Tonnage Module (mass)
 
-__Well, here is the template for you!__
-
-__This template's dependencies include:__
-- Architectury API (*its easier than the weird custom services Eureka uses*)
-- Valkyrien Skies 2
-- VS Core
-- Kotlin for Forge
-
-![vs_addon_template_logo](https://github.com/TechTastic/VS-Addon-Template/assets/74630543/de76337a-387d-44a4-aac0-f42f97bae499)
+**Integration To Do**
+- [ ] TIS: Stringify (slug, custom Cartographic stuff)
+- [ ] TIS Advanced (radar gets Ships)

@@ -3,7 +3,7 @@ architectury {
 }
 
 loom {
-    accessWidenerPath = file("src/main/resources/vs_addon_template.accesswidener")
+    accessWidenerPath = file("src/main/resources/tisvs.accesswidener")
 }
 
 dependencies {
@@ -25,6 +25,9 @@ dependencies {
 
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10"
     api "org.jetbrains.kotlin:kotlin-reflect:1.9.10"
+
+    modCompileOnly("curse.maven:tis-3d-238603:5266276")
+    modCompileOnly("curse.maven:markdownmanual-502485:4873117")
 }
 
 publishing {

@@ -28,8 +28,8 @@ loom {
 
     forge {
         convertAccessWideners = true
-        mixinConfig "vs_addon_template.mixins.json"
-        mixinConfig "vs_addon_template-common.mixins.json"
+        mixinConfig "tisvs.mixins.json"
+        mixinConfig "tisvs-common.mixins.json"
         extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
     }
 }
@@ -62,6 +62,9 @@ dependencies {
 
     // Kotlin for Forge
     implementation "thedarkcolour:kotlinforforge:$forge_kotlin_version"
+
+    modImplementation("curse.maven:tis-3d-238603:5266274")
+    modImplementation("curse.maven:markdownmanual-502485:4873115")
 }
 
 processResources {

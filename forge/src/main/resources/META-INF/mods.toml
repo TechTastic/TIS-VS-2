@@ -41,3 +41,10 @@ mandatory = true
 versionRange = "[${architectury_version},)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "tis3d"
+mandatory = true
+versionRange = "[1.7.7,)"
+ordering = "AFTER"
+side = "BOTH"
