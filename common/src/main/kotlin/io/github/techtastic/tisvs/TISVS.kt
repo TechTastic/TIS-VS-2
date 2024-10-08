@@ -7,7 +7,7 @@ object TISVS {
 
     @JvmStatic
     fun init() {
-        TISVSModules.register()
+        TISVSModules.registerModuleItems()
     }
 
     @JvmStatic

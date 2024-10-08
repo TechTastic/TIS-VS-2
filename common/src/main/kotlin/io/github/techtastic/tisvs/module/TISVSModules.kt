@@ -15,8 +15,11 @@ object TISVSModules {
     val ALTITUDE_ITEM = ITEMS.register("altitude_module", ::ModuleItem)
     val ALTITUDE_MODULE = MODULES.register("altitude_module") { SimpleModuleProvider(ALTITUDE_ITEM, ::AltitudeModule) }
 
-    fun register() {
-        ITEMS.register()
+    fun registerModules() {
         MODULES.register()
+    }
+
+    fun registerModuleItems() {
+        ITEMS.register()
     }
 }

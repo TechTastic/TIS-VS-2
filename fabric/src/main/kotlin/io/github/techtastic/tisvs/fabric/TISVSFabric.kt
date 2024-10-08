@@ -10,7 +10,7 @@ import org.valkyrienskies.mod.fabric.common.ValkyrienSkiesModFabric
 
 object TISVSFabric: ModInitializer {
     override fun onInitialize() {
-        // force VS2 to load before eureka
+        // force VS2 to load before TIS: VS
         ValkyrienSkiesModFabric().onInitialize()
 
         init()
