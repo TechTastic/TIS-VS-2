@@ -1,12 +1,11 @@
 **To Do**
 - [X] Altitude Module (Y detection)
-- [ ] Gyroscopic Module (Quaternion detection)
-- [ ] Distance Module (distance raycast)
-- [ ] Velocity Module (velocity, sculk-like?)
-- [ ] Rotational Speed Module (omega)
-- [ ] Tonnage Module (mass)
+- [X] Gyroscopic Module (Quaternion detection)
+- [X] Distance Module (distance raycast)
+- [X] Velocity Module (velocity, sculk-like?)
+- [X] Rotational Speed Module (omega)
 - [X] Framed Map Serial Interface (X and Z offsets)
 
 **Integration To Do**
-- [ ] TIS: Stringify (slug, custom Cartographic stuff)
+- [ ] TIS: Stringify (slug)
 - [ ] TIS Advanced (radar gets Ships)

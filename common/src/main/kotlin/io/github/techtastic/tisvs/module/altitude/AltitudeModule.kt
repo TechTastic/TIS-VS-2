@@ -15,7 +15,6 @@ import org.valkyrienskies.mod.common.util.toJOMLD
 
 class AltitudeModule(casing: Casing, face: Face): AbstractModuleWithRotation(casing, face) {
     override fun step() {
-        this.cancelWrite()
         Port.VALUES.forEach { port ->
             val sendingPipe = casing.getSendingPipe(face, port)
             if (sendingPipe.isWriting) return@forEach
@@ -33,7 +32,8 @@ class AltitudeModule(casing: Casing, face: Face): AbstractModuleWithRotation(cas
     }
 
     override fun render(context: RenderContext) {
-        //super.render(context)
+        if (!casing.isEnabled) return
+
         val poseStack = context.matrixStack
         poseStack.pushPose()
         this.rotateForRendering(poseStack)

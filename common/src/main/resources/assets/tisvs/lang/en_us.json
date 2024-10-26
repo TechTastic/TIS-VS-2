@@ -1,3 +1,7 @@
 {
-  "item.tisvs.altitude_module": "Altitude Module"
+  "item.tisvs.altitude_module": "Altitude Module",
+  "item.tisvs.distance_module": "Distance Module",
+  "item.tisvs.gyroscopic_module": "Gyroscopic Module",
+  "item.tisvs.omega_module": "Omega Module",
+  "item.tisvs.velocity_module": "Velocity Module"
 }
