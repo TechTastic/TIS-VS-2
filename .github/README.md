@@ -1,1 +1,1 @@
-common/src/main/resources/assets/tisvs/doc/en_us/tisvs.md
+../common/src/main/resources/assets/tisvs/doc/en_us/tisvs.md
