@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "tisvs:altitude_module",
+    "tisvs:distance_module",
+    "tisvs:gyroscopic_module",
+    "tisvs:omega_module",
+    "tisvs:velocity_module"
+  ]
+}
