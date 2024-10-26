@@ -45,5 +45,8 @@
     "fabric-api": "*",
     "architectury": ">=${architectury_version}",
     "tis3d": ">=1.7.7"
+  },
+  "recommends": {
+    "tisadvanced": "*"
   }
 }
