@@ -6,6 +6,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import io.github.techtastic.tisvs.TISVS.MOD_ID
 import io.github.techtastic.tisvs.TISVS.init
 import io.github.techtastic.tisvs.TISVS.initClient
+import io.github.techtastic.tisvs.manual.TISVSManual
 import io.github.techtastic.tisvs.module.TISVSModules
 import io.github.techtastic.tisvs.serial.TISVSSerialInterfaces
 import thedarkcolour.kotlinforforge.KotlinModLoadingContext
@@ -24,6 +25,11 @@ class TISVSForge {
 
         TISVSModules.registerModules()
         TISVSSerialInterfaces.register()
+
+        TISVSManual.registerContent()
+        TISVSManual.registerPath()
+        TISVSManual.registerTab()
+
         init()
     }
 
