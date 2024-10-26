@@ -132,19 +132,23 @@ class GyroscopicModule(casing: Casing, face: Face): AbstractModuleWithRotation(c
     }
 
     override fun use(player: Player, hand: InteractionHand, hit: Vec3): Boolean {
-        if (hit.closerThan(Vec3(0.5, 0.0, 14.0 / 16.0), 0.25)) { // UP
+        if (hit.closerThan(Vec3(0.5, 0.75, 1.0), 0.2)) { // UP
+            println("Hit the UP port")
             outputs[Port.UP] = outputs[Port.UP]?.next() ?: Output.QUAT_X
             return true
         }
-        if (hit.closerThan(Vec3(14.0 / 16.0, 0.0, 0.5), 0.25)) { // RIGHT
+        if (hit.closerThan(Vec3(0.75, 0.5, 1.0), 0.2)) { // RIGHT
+            println("Hit the RIGHT port")
             outputs[Port.RIGHT] = outputs[Port.RIGHT]?.next() ?: Output.QUAT_Y
             return true
         }
-        if (hit.closerThan(Vec3(0.5, 0.0, 2.0 / 16.0), 0.25)) { // DOWN
+        if (hit.closerThan(Vec3(0.5, 0.25, 1.0), 0.2)) { // DOWN
+            println("Hit the DOWN port")
             outputs[Port.DOWN] = outputs[Port.DOWN]?.next() ?: Output.QUAT_Z
             return true
         }
-        if (hit.closerThan(Vec3(2.0 / 16.0, 0.0, 0.5), 0.25)) { // LEFT
+        if (hit.closerThan(Vec3(0.25, 0.5, 1.0), 0.2)) { // LEFT
+            println("Hit the LEFT port")
             outputs[Port.LEFT] = outputs[Port.LEFT]?.next() ?: Output.QUAT_W
             return true
         }
@@ -168,8 +172,8 @@ class GyroscopicModule(casing: Casing, face: Face): AbstractModuleWithRotation(c
                 val offset = when (port) {
                     Port.LEFT -> Vector3f(-1.5f / 16f, 5f / 16f, 0f)
                     Port.RIGHT -> Vector3f(7f / 16f, 5f / 16f, 0f)
-                    Port.UP -> Vector3f(2.5f / 16f, 0.5f / 16f, 0f)
-                    Port.DOWN -> Vector3f(2.5f / 16f, 9.5f / 16f, 0f)
+                    Port.UP -> Vector3f(2.6f / 16f, 0.5f / 16f, 0f)
+                    Port.DOWN -> Vector3f(2.6f / 16f, 9.5f / 16f, 0f)
                 }
 
                 poseStack.translate(offset.x, offset.y, offset.z)
