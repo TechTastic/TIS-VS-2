@@ -52,5 +52,5 @@ side = "BOTH"
 [[dependencies.${mod_id}]]
 modId = "tisadvanced"
 mandatory = false
-versionRange = "[,)"
+versionRange="[1.0,)"
 side = "BOTH"
