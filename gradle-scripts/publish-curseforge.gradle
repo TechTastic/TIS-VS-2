@@ -14,6 +14,7 @@ curseforge {
                 relations {
                     requiredDependency 'valkyrien-skies'
                     requiredDependency 'tis-3d'
+                    requiredDependecy 'architectury-api'
                     if (project.loader_platform == "Forge") {
                         requiredDependency 'kotlin-for-forge'
                         optionalDependency 'tis-advanced'
@@ -44,6 +45,7 @@ modrinth {
     dependencies {
         required.project "valkyrien-skies"
         required.project "tis3d"
+        required.project "architectury-api"
         if (project.loader_platform == "Forge") {
             required.project "kotlin-for-forge"
             optional.project "tis-advanced"
