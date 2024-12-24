@@ -16,6 +16,7 @@ object TISVS {
         TISVSModules.registerModuleItems()
 
         ITEMS.register()
+        TISVSGameRules.register()
     }
 
     @JvmStatic

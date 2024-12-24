@@ -1,6 +1,7 @@
 package io.github.techtastic.tisvs.module.distance
 
 import io.github.techtastic.tisvs.TISVS.MOD_ID
+import io.github.techtastic.tisvs.TISVSGameRules
 import io.github.techtastic.tisvs.util.HalfFloat
 import io.github.techtastic.tisvs.util.RaycastHelper
 import li.cil.tis3d.api.machine.Casing
@@ -15,12 +16,17 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.phys.HitResult
 
 class DistanceModule(casing: Casing, face: Face): AbstractModuleWithRotation(casing, face) {
-    var distance = 10.0
+    var distance = casing.casingLevel.gameRules.getRule(TISVSGameRules.MAX_DISTANCE).get().toDouble()
+        set(value) {
+            field = value.coerceAtMost(getMaxDistance())
+        }
 
     override fun step() {
         this.stepInput()
         this.stepOutput()
     }
+
+    fun getMaxDistance() = casing.casingLevel.gameRules.getRule(TISVSGameRules.MAX_DISTANCE).get().toDouble()
 
     private fun stepInput() {
         Port.VALUES.forEach { port ->
@@ -41,6 +47,7 @@ class DistanceModule(casing: Casing, face: Face): AbstractModuleWithRotation(cas
 
     private fun hitSomething(): Boolean {
         val level = casing.casingLevel
+        distance = distance
         val result = level.clip(RaycastHelper.createContext(casing.position, Face.toDirection(face), distance))
 
         return result.type != HitResult.Type.MISS
@@ -51,7 +58,7 @@ class DistanceModule(casing: Casing, face: Face): AbstractModuleWithRotation(cas
         super.onInstalled(stack)
 
         if (!stack.hasTag()) {
-            distance = 10.0
+            distance = getMaxDistance()
             return
         }
 

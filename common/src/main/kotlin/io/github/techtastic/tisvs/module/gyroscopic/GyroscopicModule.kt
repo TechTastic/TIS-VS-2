@@ -49,9 +49,9 @@ class GyroscopicModule(casing: Casing, face: Face): AbstractModuleWithRotation(c
                 QUAT_Y -> rot.y().toFloat()
                 QUAT_Z -> rot.z().toFloat()
                 QUAT_W -> rot.w().toFloat()
-                ROLL -> Math.toDegrees(rot.getEulerAnglesXYZ(Vector3d()).x).toFloat()
-                PITCH -> Math.toDegrees(rot.getEulerAnglesXYZ(Vector3d()).z).toFloat()
-                YAW -> Math.toDegrees(rot.getEulerAnglesXYZ(Vector3d()).y).toFloat()
+                ROLL -> Math.toDegrees(rot.getEulerAnglesZYX(Vector3d()).x).toFloat()
+                PITCH -> Math.toDegrees(rot.getEulerAnglesYXZ(Vector3d()).z).toFloat()
+                YAW -> Math.toDegrees(rot.getEulerAnglesZXY(Vector3d()).y).toFloat()
             })
         }
 
@@ -132,24 +132,19 @@ class GyroscopicModule(casing: Casing, face: Face): AbstractModuleWithRotation(c
     }
 
     override fun use(player: Player, hand: InteractionHand, hit: Vec3): Boolean {
-        if (hit.closerThan(Vec3(0.5, 0.75, 1.0), 0.2)) { // UP
-            println("Hit the UP port")
+        val uvHit = this.hitToUV(hit)
+
+        if (uvHit.closerThan(Vec3(0.5, 0.25, 0.0), 0.15)) { // UP
             outputs[Port.UP] = outputs[Port.UP]?.next() ?: Output.QUAT_X
             return true
-        }
-        if (hit.closerThan(Vec3(0.75, 0.5, 1.0), 0.2)) { // RIGHT
-            println("Hit the RIGHT port")
+        } else if (uvHit.closerThan(Vec3(0.25, 0.5, 0.0), 0.15)) { // LEFT
+            outputs[Port.LEFT] = outputs[Port.LEFT]?.next() ?: Output.QUAT_W
+            return true
+        } else if (uvHit.closerThan(Vec3(0.75, 0.5, 0.0), 0.15)) { // RIGHT
             outputs[Port.RIGHT] = outputs[Port.RIGHT]?.next() ?: Output.QUAT_Y
             return true
-        }
-        if (hit.closerThan(Vec3(0.5, 0.25, 1.0), 0.2)) { // DOWN
-            println("Hit the DOWN port")
+        } else if (uvHit.closerThan(Vec3(0.5, 0.75, 0.0), 0.15)) { // DOWN
             outputs[Port.DOWN] = outputs[Port.DOWN]?.next() ?: Output.QUAT_Z
-            return true
-        }
-        if (hit.closerThan(Vec3(0.25, 0.5, 1.0), 0.2)) { // LEFT
-            println("Hit the LEFT port")
-            outputs[Port.LEFT] = outputs[Port.LEFT]?.next() ?: Output.QUAT_W
             return true
         }
 

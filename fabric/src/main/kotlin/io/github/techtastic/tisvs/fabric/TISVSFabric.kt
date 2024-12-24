@@ -9,6 +9,7 @@ import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
+import net.minecraft.world.level.GameRules
 import org.valkyrienskies.mod.fabric.common.ValkyrienSkiesModFabric
 
 object TISVSFabric: ModInitializer {

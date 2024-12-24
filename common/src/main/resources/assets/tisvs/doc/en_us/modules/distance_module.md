@@ -9,3 +9,4 @@ When a target is hit, it will turn green and output 1, else it will turn red and
 
 
 The distance is defined by writing to the module whenever and accepts only half-point precision floats.
+The max distance allowed, by default, is 10 blocks. This can be changed via the `maxDistance` gamerule.
