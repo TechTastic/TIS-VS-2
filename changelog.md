@@ -1,3 +1,2 @@
 Fixes
-- Fixed Gyro Module hit detection
-- Added GameRule for Distance Module Max Distance (`maxDistance`)
+- Removed Roll, Pitch and Yaw from Gyroscopic Module (I hate dealing with Gimbal Lock)

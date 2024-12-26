@@ -25,20 +25,17 @@ import org.valkyrienskies.mod.common.getShipObjectManagingPos
 
 class GyroscopicModule(casing: Casing, face: Face): AbstractModuleWithRotation(casing, face) {
     val outputs = mutableMapOf(
-        Pair(Port.UP, Output.ROLL),
-        Pair(Port.RIGHT, Output.PITCH),
-        Pair(Port.DOWN, Output.YAW),
-        Pair(Port.LEFT, Output.QUAT_W)
+        Pair(Port.UP, Output.QUAT_W),
+        Pair(Port.RIGHT, Output.QUAT_X),
+        Pair(Port.DOWN, Output.QUAT_Y),
+        Pair(Port.LEFT, Output.QUAT_Z)
     )
 
     enum class Output {
         QUAT_X,
         QUAT_Y,
         QUAT_Z,
-        QUAT_W,
-        ROLL,
-        PITCH,
-        YAW;
+        QUAT_W;
 
         fun get(level: Level, pos: BlockPos): Short {
             val ship = level.getShipObjectManagingPos(pos) ?: return HalfFloat.NaN
@@ -49,9 +46,6 @@ class GyroscopicModule(casing: Casing, face: Face): AbstractModuleWithRotation(c
                 QUAT_Y -> rot.y().toFloat()
                 QUAT_Z -> rot.z().toFloat()
                 QUAT_W -> rot.w().toFloat()
-                ROLL -> Math.toDegrees(rot.getEulerAnglesZYX(Vector3d()).x).toFloat()
-                PITCH -> Math.toDegrees(rot.getEulerAnglesYXZ(Vector3d()).z).toFloat()
-                YAW -> Math.toDegrees(rot.getEulerAnglesZXY(Vector3d()).y).toFloat()
             })
         }
 
@@ -59,10 +53,7 @@ class GyroscopicModule(casing: Casing, face: Face): AbstractModuleWithRotation(c
             QUAT_X -> QUAT_Y
             QUAT_Y -> QUAT_Z
             QUAT_Z -> QUAT_W
-            QUAT_W -> ROLL
-            ROLL -> PITCH
-            PITCH -> YAW
-            YAW -> QUAT_X
+            QUAT_W -> QUAT_X
         }
 
         fun render(poseStack: PoseStack, context: RenderContext, font: FontRenderer) {
@@ -71,9 +62,6 @@ class GyroscopicModule(casing: Casing, face: Face): AbstractModuleWithRotation(c
                 QUAT_Y -> Pair("qY", Color.GREEN)
                 QUAT_Z -> Pair("qZ", Color.BLUE)
                 QUAT_W -> Pair("qW", Color.GRAY)
-                ROLL -> Pair("R", Color.RED)
-                PITCH -> Pair("P", Color.BLUE)
-                YAW -> Pair("Y", Color.GREEN)
             }
 
             val width = font.width(str).toDouble()
