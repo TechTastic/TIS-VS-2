@@ -38,17 +38,19 @@ class AltitudeModule(casing: Casing, face: Face): AbstractModuleWithRotation(cas
         poseStack.pushPose()
         this.rotateForRendering(poseStack)
         context.drawAtlasQuadUnlit(ResourceLocation(MOD_ID, "block/overlay/altitude_module"))
-
-        if (context.closeEnoughForDetails(casing.position)) drawState(context)
-
         poseStack.popPose()
+
+        if (context.closeEnoughForDetails(casing.position))
+            drawState(context)
+
+        //poseStack.popPose()
     }
 
     fun drawState(context: RenderContext) {
         val poseStack = context.matrixStack
         poseStack.pushPose()
         val font = API.normalFontRenderer
-        poseStack.translate(3 / 16f, 5 / 16f, 0f)
+        poseStack.translate(3 / 16.0, 5 / 16.0, 0.0)
         poseStack.scale(1 / 96f, 1 / 96f, 1f)
 
         val altitude = "${HalfFloat.toFloat(this.getAltitude())}"

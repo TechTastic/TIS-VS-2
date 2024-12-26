@@ -103,7 +103,7 @@ class OmegaModule(casing: Casing, face: Face): AbstractModuleWithRotation(casing
         val font = API.normalFontRenderer
 
         if (context.closeEnoughForDetails(casing.position)) {
-            poseStack.translate(3 / 16f, 10 / 16f, 0f)
+            poseStack.translate(3 / 16.0, 10 / 16.0, 0.0)
             poseStack.scale(1 / 96f, 1 / 96f, 1f)
 
             val omega = "${HalfFloat.toFloat(output.get(casing.casingLevel, casing.position))}"

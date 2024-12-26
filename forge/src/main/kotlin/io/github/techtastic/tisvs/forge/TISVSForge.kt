@@ -1,18 +1,21 @@
 package io.github.techtastic.tisvs.forge
 
 import dev.architectury.platform.forge.EventBuses
-import net.minecraftforge.fml.common.Mod
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import io.github.techtastic.tisvs.TISVS.MOD_ID
 import io.github.techtastic.tisvs.TISVS.init
 import io.github.techtastic.tisvs.TISVS.initClient
 import io.github.techtastic.tisvs.manual.TISVSManual
 import io.github.techtastic.tisvs.module.TISVSModules
 import io.github.techtastic.tisvs.serial.TISVSSerialInterfaces
-import li.cil.tis3d.common.item.ModCreativeTabs
-import net.minecraftforge.common.CreativeModeTabRegistry
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.inventory.InventoryMenu
+import net.minecraftforge.client.event.TextureStitchEvent
+import net.minecraftforge.eventbus.api.SubscribeEvent
+import net.minecraftforge.fml.common.Mod
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import thedarkcolour.kotlinforforge.KotlinModLoadingContext
+import java.util.*
+
 
 @Mod(MOD_ID)
 class TISVSForge {
@@ -21,7 +24,7 @@ class TISVSForge {
         EventBuses.registerModEventBus(MOD_ID, bus)
 
         bus.addListener(this::clientSetup)
-        bus.addListener(this::onTabRegistry)
+        bus.addListener(this::handleTextureStitchEvent)
 
         TISVSModules.registerModules()
         TISVSSerialInterfaces.register()
@@ -37,13 +40,18 @@ class TISVSForge {
         initClient()
     }
 
-    private fun onTabRegistry(event: BuildCreativeModeTabContentsEvent) {
-        if (event.tab == ModCreativeTabs.COMMON.get()) {
-            event.accept(TISVSModules.ALTITUDE_ITEM)
-            event.accept(TISVSModules.DISTANCE_ITEM)
-            event.accept(TISVSModules.GYROSCOPIC_ITEM)
-            event.accept(TISVSModules.OMEGA_ITEM)
-            event.accept(TISVSModules.VELOCITY_ITEM)
+    private fun handleTextureStitchEvent(event: TextureStitchEvent.Pre) {
+        if (Objects.equals(event.atlas.location(), InventoryMenu.BLOCK_ATLAS)) {
+            event.addSprite(ResourceLocation(MOD_ID, "block/overlay/distance_module"))
+            event.addSprite(ResourceLocation(MOD_ID, "block/overlay/altitude_module"))
+            event.addSprite(ResourceLocation(MOD_ID, "block/overlay/gyroscopic_module"))
+            event.addSprite(ResourceLocation(MOD_ID, "block/overlay/velocity/x"))
+            event.addSprite(ResourceLocation(MOD_ID, "block/overlay/velocity/y"))
+            event.addSprite(ResourceLocation(MOD_ID, "block/overlay/velocity/z"))
+            event.addSprite(ResourceLocation(MOD_ID, "block/overlay/rotation_speed/roll"))
+            event.addSprite(ResourceLocation(MOD_ID, "block/overlay/rotation_speed/pitch"))
+            event.addSprite(ResourceLocation(MOD_ID, "block/overlay/rotation_speed/yaw"))
         }
     }
+
 }

@@ -45,7 +45,7 @@ side = "BOTH"
 [[dependencies.${mod_id}]]
 modId = "tis3d"
 mandatory = true
-versionRange = "[1.7.7,)"
+versionRange = "[1.7.4,)"
 ordering = "AFTER"
 side = "BOTH"
 

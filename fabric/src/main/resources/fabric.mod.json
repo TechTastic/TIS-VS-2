@@ -44,7 +44,7 @@
     "fabricloader": ">=${fabric_loader_version}",
     "fabric-api": "*",
     "architectury": ">=${architectury_version}",
-    "tis3d": ">=1.7.7"
+    "tis3d": ">=1.7.4"
   },
   "recommends": {
     "tisadvanced": "*"

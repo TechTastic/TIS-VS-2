@@ -153,10 +153,10 @@ class GyroscopicModule(casing: Casing, face: Face): AbstractModuleWithRotation(c
         if (context.closeEnoughForDetails(casing.position))
             outputs.forEach { (port, output) ->
                 val offset = when (port) {
-                    Port.LEFT -> Vector3f(-1.5f / 16f, 5f / 16f, 0f)
-                    Port.RIGHT -> Vector3f(7f / 16f, 5f / 16f, 0f)
-                    Port.UP -> Vector3f(2.6f / 16f, 0.5f / 16f, 0f)
-                    Port.DOWN -> Vector3f(2.6f / 16f, 9.5f / 16f, 0f)
+                    Port.LEFT -> Vector3d(-1.5 / 16, 5 / 16.0, 0.0)
+                    Port.RIGHT -> Vector3d(7 / 16.0, 5 / 16.0, 0.0)
+                    Port.UP -> Vector3d(2.6 / 16, 0.5 / 16, 0.0)
+                    Port.DOWN -> Vector3d(2.6 / 16, 9.5 / 16, 0.0)
                 }
 
                 poseStack.translate(offset.x, offset.y, offset.z)

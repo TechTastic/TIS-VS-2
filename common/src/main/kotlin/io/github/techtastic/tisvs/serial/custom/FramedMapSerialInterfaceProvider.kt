@@ -14,6 +14,7 @@ import net.minecraft.world.item.MapItem
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.AABB
 import org.valkyrienskies.mod.common.getShipObjectManagingPos
+import org.valkyrienskies.mod.common.util.toDoubles
 import org.valkyrienskies.mod.common.util.toJOMLD
 import org.valkyrienskies.mod.common.util.toMinecraft
 import java.util.*
@@ -37,7 +38,7 @@ class FramedMapSerialInterfaceProvider: SerialInterfaceProvider {
 
     fun getFramedMap(level: Level, pos: BlockPos, direction: Direction): ItemFrame? {
         val frames = level.getEntitiesOfClass(ItemFrame::class.java,
-            AABB.ofSize(pos.center, 1.0, 1.0, 1.0)).filter{ frame ->
+            AABB.ofSize(pos.toDoubles().add(0.5, 0.5, 0.5), 1.0, 1.0, 1.0)).filter{ frame ->
                 frame.hasFramedMap() && frame.direction.opposite == direction }
         println(frames)
         return frames.firstOrNull()
@@ -75,7 +76,7 @@ class FramedMapSerialInterfaceProvider: SerialInterfaceProvider {
         }
 
         private fun getOffset(): Short {
-            val level = frame.level() as ServerLevel
+            val level = frame.level as ServerLevel
             val pos = frame.onPos
             val ship = level.getShipObjectManagingPos(pos)
 
@@ -85,14 +86,14 @@ class FramedMapSerialInterfaceProvider: SerialInterfaceProvider {
 
             if (!isOnMap(testPos.x, testPos.z))
                 return if (outputX)
-                    if (testPos.x < mapData.centerX) HalfFloat.NEGATIVE_ZERO else HalfFloat.POSITIVE_INFINITY
+                    if (testPos.x < mapData.x) HalfFloat.NEGATIVE_ZERO else HalfFloat.POSITIVE_INFINITY
                 else
-                    if (testPos.z < mapData.centerZ) HalfFloat.NEGATIVE_ZERO else HalfFloat.POSITIVE_INFINITY
+                    if (testPos.z < mapData.z) HalfFloat.NEGATIVE_ZERO else HalfFloat.POSITIVE_INFINITY
 
             return if (outputX)
-                HalfFloat.toHalf(testPos.x.toFloat() - mapData.centerX)
+                HalfFloat.toHalf(testPos.x.toFloat() - mapData.x)
             else
-                HalfFloat.toHalf(testPos.z.toFloat() - mapData.centerZ)
+                HalfFloat.toHalf(testPos.z.toFloat() - mapData.z)
         }
 
         private fun isOnMap(x: Double, z: Double) =

@@ -103,7 +103,7 @@ class VelocityModule(casing: Casing, face: Face): AbstractModuleWithRotation(cas
         val font = API.normalFontRenderer
 
         if (context.closeEnoughForDetails(casing.position)) {
-            poseStack.translate(3 / 16f, 5 / 16f, 0f)
+            poseStack.translate(3 / 16.0, 5 / 16.0, 0.0)
             poseStack.scale(1 / 96f, 1 / 96f, 1f)
 
             val velocity = "${HalfFloat.toFloat(output.get(casing.casingLevel, casing.position))}"
