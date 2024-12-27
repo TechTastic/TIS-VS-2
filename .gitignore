@@ -1,1 +1,6 @@
 /.gradle/buildOutputCleanup/outputFiles.bin
+/.idea/
+/.gradle/
+/common/build/
+/forge/build/
+/fabric/build/
