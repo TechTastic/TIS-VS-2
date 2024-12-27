@@ -3,19 +3,15 @@ package io.github.techtastic.tisvs.forge
 import dev.architectury.platform.forge.EventBuses
 import io.github.techtastic.tisvs.TISVS.MOD_ID
 import io.github.techtastic.tisvs.TISVS.init
-import io.github.techtastic.tisvs.TISVS.initClient
-import io.github.techtastic.tisvs.manual.TISVSManual
-import io.github.techtastic.tisvs.module.TISVSModules
-import io.github.techtastic.tisvs.serial.TISVSSerialInterfaces
+import io.github.techtastic.tisvs.forge.manual.TISVSManual
+import io.github.techtastic.tisvs.forge.module.TISVSModules
+import io.github.techtastic.tisvs.forge.serial.TISVSSerialInterfaces
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.inventory.InventoryMenu
 import net.minecraftforge.client.event.TextureStitchEvent
-import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import thedarkcolour.kotlinforforge.KotlinModLoadingContext
 import java.util.*
-
 
 @Mod(MOD_ID)
 class TISVSForge {
@@ -23,21 +19,16 @@ class TISVSForge {
         val bus = KotlinModLoadingContext.get().getKEventBus()
         EventBuses.registerModEventBus(MOD_ID, bus)
 
-        bus.addListener(this::clientSetup)
         bus.addListener(this::handleTextureStitchEvent)
 
-        TISVSModules.registerModules()
-        TISVSSerialInterfaces.register()
-
-        TISVSManual.registerContent()
-        TISVSManual.registerPath()
-        TISVSManual.registerTab()
-
         init()
-    }
 
-    private fun clientSetup(event: FMLClientSetupEvent) {
-        initClient()
+        TISVSModules.registerModuleItems(bus)
+        TISVSModules.registerModules(bus)
+
+        TISVSSerialInterfaces.register(bus)
+
+        TISVSManual.register(bus)
     }
 
     private fun handleTextureStitchEvent(event: TextureStitchEvent.Pre) {
@@ -53,5 +44,4 @@ class TISVSForge {
             event.addSprite(ResourceLocation(MOD_ID, "block/overlay/rotation_speed/yaw"))
         }
     }
-
 }

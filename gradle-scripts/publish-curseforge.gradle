@@ -15,10 +15,8 @@ curseforge {
                     requiredDependency 'valkyrien-skies'
                     requiredDependency 'tis-3d'
                     requiredDependency 'architectury-api'
-                    if (project.loader_platform == "Forge") {
-                        requiredDependency 'kotlin-for-forge'
-                        optionalDependency 'tis-advanced'
-                    }
+                    requiredDependency 'kotlin-for-forge'
+                    optionalDependency 'tis-advanced'
                 }
                 displayName = 'TIS-VS ' + project.minecraft_version + ' ' + project.loader_platform + ' ' + project.mod_version
             }
@@ -46,9 +44,7 @@ modrinth {
         required.project "valkyrien-skies"
         required.project "tis3d"
         required.project "architectury-api"
-        if (project.loader_platform == "Forge") {
-            required.project "kotlin-for-forge"
-            optional.project "tis-advanced"
-        }
+        required.project "kotlin-for-forge"
+        optional.project "tis-advanced"
     }
 }

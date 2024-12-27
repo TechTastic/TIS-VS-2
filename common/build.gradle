@@ -1,21 +1,18 @@
 architectury {
-    common(rootProject.enabled_platforms.split(","))
-}
-
-loom {
-    accessWidenerPath = file("src/main/resources/tisvs.accesswidener")
+    common rootProject.enabled_platforms.split(',')
 }
 
 dependencies {
-    // We depend on fabric loader here to use the fabric @Environment annotations and get the mixin dependencies
-    // Do NOT use other classes from fabric loader
-    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
+    // We depend on Fabric Loader here to use the Fabric @Environment annotations,
+    // which get remapped to the correct annotations on each platform.
+    // Do NOT use other classes from Fabric Loader.
+    modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
 
-    // Architectury API
-    modApi "dev.architectury:architectury:${rootProject.architectury_version}"
+    // Architectury API. This is optional, and you can comment it out if you don't need it.
+    modImplementation "dev.architectury:architectury:$rootProject.architectury_version"
 
     // Valkyrien Skies 2
-    modApi("org.valkyrienskies:valkyrienskies-119-common:${rootProject.vs2_version}")
+    modApi("org.valkyrienskies:valkyrienskies-118-common:${rootProject.vs2_version}")
 
     // VS Core
     compileOnly("org.valkyrienskies.core:api:${rootProject.vs_core_version}")
@@ -26,43 +23,7 @@ dependencies {
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10"
     api "org.jetbrains.kotlin:kotlin-reflect:1.9.10"
 
-    modCompileOnly("curse.maven:tis-3d-238603:4755446")
-    modCompileOnly("curse.maven:markdownmanual-502485:4306670")
-}
-
-publishing {
-    publications {
-        mavenCommon(MavenPublication) {
-            groupId = "org.valkyrienskies.eureka"
-            version = project.version
-            artifactId = rootProject.archives_base_name + "-" + project.name
-            from components.java
-        }
-    }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        if (project.vs_maven_username && project.vs_maven_password) {
-            println "Publishing to VS Maven"
-            maven {
-                url = project.vs_maven_url
-                credentials {
-                    username = project.vs_maven_username
-                    password = project.vs_maven_password
-                }
-            }
-        }
-        // Add repositories to publish to here.
-        if (System.getenv("GITHUB_ACTOR") != null) {
-            println "Publishing to Github Packages"
-            maven {
-                name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/ValkyrienSkies/Eureka")
-                credentials {
-                    username = System.getenv("GITHUB_ACTOR")
-                    password = System.getenv("GITHUB_TOKEN")
-                }
-            }
-        }
-    }
+    // TIS-3D
+    modCompileOnly("curse.maven:tis-3d-238603:3738437")
+    modCompileOnly("curse.maven:markdownmanual-502485:3738124")
 }

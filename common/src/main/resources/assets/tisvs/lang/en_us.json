@@ -1,5 +1,6 @@
 {
   "tisvs.manual.tab": "TIS-VS",
+  "tisvs.manual.serial_protocols.framed_map": "Framed Map",
   "item.tisvs.altitude_module": "Altitude Module",
   "item.tisvs.distance_module": "Distance Module",
   "item.tisvs.gyroscopic_module": "Gyroscopic Module",
