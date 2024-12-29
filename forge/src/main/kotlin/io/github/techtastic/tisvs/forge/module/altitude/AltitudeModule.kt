@@ -2,8 +2,6 @@ package io.github.techtastic.tisvs.forge.module.altitude
 
 import io.github.techtastic.tisvs.TISVS.MOD_ID
 import io.github.techtastic.tisvs.util.HalfFloat
-import io.github.techtastic.tisvs.util.VSUtils.getShip
-import io.github.techtastic.tisvs.util.VSUtils.toJOMLd
 import li.cil.tis3d.api.API
 import li.cil.tis3d.api.machine.Casing
 import li.cil.tis3d.api.machine.Face
@@ -12,6 +10,8 @@ import li.cil.tis3d.api.prefab.module.AbstractModuleWithRotation
 import li.cil.tis3d.api.util.RenderContext
 import li.cil.tis3d.util.Color
 import net.minecraft.resources.ResourceLocation
+import org.valkyrienskies.mod.api.getShipManagingBlock
+import org.valkyrienskies.mod.common.util.toJOMLD
 
 class AltitudeModule(casing: Casing, face: Face): AbstractModuleWithRotation(casing, face) {
     override fun step() {
@@ -25,9 +25,9 @@ class AltitudeModule(casing: Casing, face: Face): AbstractModuleWithRotation(cas
     fun getAltitude(): Short {
         val level = casing.casingLevel
         val pos = casing.position
-        val ship = level.getShip(pos) ?: return HalfFloat.toHalf(pos.y.toFloat())
+        val ship = level.getShipManagingBlock(pos) ?: return HalfFloat.toHalf(pos.y.toFloat())
 
-        val worldPos = ship.transform.shipToWorld.transformPosition(pos.toJOMLd())
+        val worldPos = ship.transform.shipToWorld.transformPosition(pos.toJOMLD())
         return HalfFloat.toHalf(worldPos.y.toFloat())
     }
 

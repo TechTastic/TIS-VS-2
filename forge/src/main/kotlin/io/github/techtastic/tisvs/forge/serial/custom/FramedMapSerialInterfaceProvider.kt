@@ -1,8 +1,6 @@
 package io.github.techtastic.tisvs.forge.serial.custom
 
 import io.github.techtastic.tisvs.util.HalfFloat
-import io.github.techtastic.tisvs.util.VSUtils.getShip
-import io.github.techtastic.tisvs.util.VSUtils.toJOMLd
 import li.cil.tis3d.api.serial.SerialInterface
 import li.cil.tis3d.api.serial.SerialInterfaceProvider
 import li.cil.tis3d.api.serial.SerialProtocolDocumentationReference
@@ -18,6 +16,10 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
 import net.minecraftforge.registries.ForgeRegistryEntry
+import org.valkyrienskies.mod.api.getShipManagingBlock
+import org.valkyrienskies.mod.api.positionToWorld
+import org.valkyrienskies.mod.common.ValkyrienSkiesMod
+import org.valkyrienskies.mod.common.util.toJOMLD
 import thedarkcolour.kotlinforforge.forge.vectorutil.toVec3
 import java.util.*
 
@@ -42,11 +44,9 @@ class FramedMapSerialInterfaceProvider: ForgeRegistryEntry<SerialInterfaceProvid
     }
 
     fun getFramedMap(level: Level, pos: BlockPos, direction: Direction): ItemFrame? {
-        val frames = level.getEntitiesOfClass(ItemFrame::class.java,
-            AABB.ofSize(pos.toVec3().add(0.5, 0.5, 0.5), 1.0, 1.0, 1.0)).filter{ frame ->
+        return level.getEntitiesOfClass(ItemFrame::class.java,
+            AABB.ofSize(pos.toVec3().add(0.5, 0.5, 0.5), 1.0, 1.0, 1.0)).firstOrNull { frame ->
                 frame.item.`is`(Items.FILLED_MAP) && frame.direction.opposite == direction }
-        println(frames)
-        return frames.firstOrNull()
     }
 
     private class FramedMapSerialInterface(val frame: ItemFrame): SerialInterface {
@@ -83,23 +83,21 @@ class FramedMapSerialInterfaceProvider: ForgeRegistryEntry<SerialInterfaceProvid
         private fun getOffset(): Short {
             val level = frame.level as ServerLevel
             val pos = frame.onPos
-            val ship = level.getShip(pos)
+            val ship = level.getShipManagingBlock(pos)
 
-            val testPos = ship?.transform?.shipToWorld?.transformPosition(pos.toJOMLd())
-                ?: pos.toJOMLd()
-            val convertedPos = Vec3(testPos.x, testPos.y, testPos.z)
+            val testPos = ship?.positionToWorld(pos.toJOMLD()) ?: pos.toJOMLD()
             val mapData = MapItem.getSavedData(frame.item, level) ?: return HalfFloat.NaN
 
-            if (!isOnMap(convertedPos.x, convertedPos.z))
+            if (!isOnMap(testPos.x, testPos.z))
                 return if (outputX)
-                    if (convertedPos.x < mapData.x) HalfFloat.NEGATIVE_ZERO else HalfFloat.POSITIVE_INFINITY
+                    if (testPos.x < mapData.x) HalfFloat.NEGATIVE_ZERO else HalfFloat.POSITIVE_INFINITY
                 else
-                    if (convertedPos.z < mapData.z) HalfFloat.NEGATIVE_ZERO else HalfFloat.POSITIVE_INFINITY
+                    if (testPos.z < mapData.z) HalfFloat.NEGATIVE_ZERO else HalfFloat.POSITIVE_INFINITY
 
             return if (outputX)
-                HalfFloat.toHalf(convertedPos.x.toFloat() - mapData.x)
+                HalfFloat.toHalf(testPos.x.toFloat() - mapData.x)
             else
-                HalfFloat.toHalf(convertedPos.z.toFloat() - mapData.z)
+                HalfFloat.toHalf(testPos.z.toFloat() - mapData.z)
         }
 
         private fun isOnMap(x: Double, z: Double) =

@@ -3,7 +3,6 @@ package io.github.techtastic.tisvs.forge.module.gyroscopic
 import com.mojang.blaze3d.vertex.PoseStack
 import io.github.techtastic.tisvs.TISVS.MOD_ID
 import io.github.techtastic.tisvs.util.HalfFloat
-import io.github.techtastic.tisvs.util.VSUtils.getShip
 import li.cil.manual.api.render.FontRenderer
 import li.cil.tis3d.api.API
 import li.cil.tis3d.api.machine.Casing
@@ -21,6 +20,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.Vec3
 import org.joml.Vector3d
+import org.valkyrienskies.mod.api.getShipManagingBlock
 
 class GyroscopicModule(casing: Casing, face: Face): AbstractModuleWithRotation(casing, face) {
     val outputs = mutableMapOf(
@@ -37,7 +37,7 @@ class GyroscopicModule(casing: Casing, face: Face): AbstractModuleWithRotation(c
         QUAT_W;
 
         fun get(level: Level, pos: BlockPos): Short {
-            val ship = level.getShip(pos) ?: return HalfFloat.NaN
+            val ship = level.getShipManagingBlock(pos) ?: return HalfFloat.NaN
 
             val rot = ship.transform.shipToWorldRotation
             return HalfFloat.toHalf(when (this) {

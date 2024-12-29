@@ -2,7 +2,6 @@ package io.github.techtastic.tisvs.forge.module.omega
 
 import io.github.techtastic.tisvs.TISVS.MOD_ID
 import io.github.techtastic.tisvs.util.HalfFloat
-import io.github.techtastic.tisvs.util.VSUtils.getShip
 import li.cil.tis3d.api.API
 import li.cil.tis3d.api.machine.Casing
 import li.cil.tis3d.api.machine.Face
@@ -18,6 +17,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.Vec3
+import org.valkyrienskies.mod.api.getShipManagingBlock
 
 class OmegaModule(casing: Casing, face: Face): AbstractModuleWithRotation(casing, face) {
     var output = Output.X
@@ -28,11 +28,11 @@ class OmegaModule(casing: Casing, face: Face): AbstractModuleWithRotation(casing
         Z;
 
         fun get(level: Level, pos: BlockPos): Short {
-            val ship = level.getShip(pos) ?: return HalfFloat.NaN
+            val ship = level.getShipManagingBlock(pos) ?: return HalfFloat.NaN
             return HalfFloat.toHalf(when (this) {
-                X -> ship.omega.x()
-                Y -> ship.omega.y()
-                Z -> ship.omega.z()
+                X -> ship.angularVelocity.x()
+                Y -> ship.angularVelocity.y()
+                Z -> ship.angularVelocity.z()
             }.toFloat())
         }
 
