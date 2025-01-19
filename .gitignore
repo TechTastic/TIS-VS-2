@@ -4,3 +4,6 @@
 /common/build/
 /forge/build/
 /fabric/build/
+/forge/.gradle/
+/common/.gradle/
+/forge/run/
