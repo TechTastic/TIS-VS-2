@@ -1,1 +1,1 @@
-Ported to 1.19.2!
+Fixed VS Dependency
